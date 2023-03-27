@@ -2,13 +2,19 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://HCHogan.github.io/posts/compilers/</loc>
-    <lastmod>2023-03-27T17:24:04+08:00</lastmod>
-  </url><url>
     <loc>https://HCHogan.github.io/</loc>
-    <lastmod>2023-03-27T17:24:04+08:00</lastmod>
+    <lastmod>2023-03-27T17:29:04+08:00</lastmod>
   </url><url>
     <loc>https://HCHogan.github.io/posts/</loc>
+    <lastmod>2023-03-27T17:29:04+08:00</lastmod>
+  </url><url>
+    <loc>https://HCHogan.github.io/posts/swiftui/</loc>
+    <lastmod>2023-03-27T17:29:04+08:00</lastmod>
+  </url><url>
+    <loc>https://HCHogan.github.io/posts/swift-language-guide/</loc>
+    <lastmod>2023-03-27T17:27:54+08:00</lastmod>
+  </url><url>
+    <loc>https://HCHogan.github.io/posts/compilers/</loc>
     <lastmod>2023-03-27T17:24:04+08:00</lastmod>
   </url><url>
     <loc>https://HCHogan.github.io/posts/cxx2.0/</loc>
