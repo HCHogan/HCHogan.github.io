@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+
+
+
+
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Hank&#39;s blog</title>
+        <link>https://HCHogan.github.io/</link>
+        <description>MemE is a powerful and highly customizable GoHugo theme for personal blogs.</description>
+        <generator>Hugo 0.111.3 https://gohugo.io/</generator>
+        
+            <language>en</language>
+        
+        
+            <managingEditor>hankchogan@gmail.com (Hank C. Hogan)</managingEditor>
+        
+        
+            <webMaster>hankchogan@gmail.com (Hank C. Hogan)</webMaster>
+        
+        
+            <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright>
+        
+        <lastBuildDate>Mon, 27 Mar 2023 16:58:11 &#43;0800</lastBuildDate>
+        
+            <atom:link rel="self" type="application/rss&#43;xml" href="https://HCHogan.github.io/rss.xml" />
+        
+        
+    </channel>
+</rss>
