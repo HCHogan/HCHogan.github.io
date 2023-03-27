@@ -23,10 +23,70 @@
         
             <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright>
         
-        <lastBuildDate>Mon, 27 Mar 2023 17:15:53 &#43;0800</lastBuildDate>
+        <lastBuildDate>Mon, 27 Mar 2023 17:24:28 &#43;0800</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://HCHogan.github.io/rss.xml" />
         
+        
+            <item>
+                <title>Compilers</title>
+                <link>https://HCHogan.github.io/posts/compilers/</link>
+                <guid isPermaLink="true">https://HCHogan.github.io/posts/compilers/</guid>
+                <pubDate>Mon, 27 Mar 2023 17:23:39 &#43;0800</pubDate>
+                
+                    <author>hankchogan@gmail.com (Hank C. Hogan)</author>
+                
+                <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright>
+                
+                    <description>&lt;h1 id=&#34;compilers&#34;&gt;Compilers&lt;/h1&gt;
+&lt;h2 id=&#34;1-intro&#34;&gt;1. intro&lt;/h2&gt;
+&lt;h3 id=&#34;1-lexical-analysis--scanning&#34;&gt;1. lexical analysis / scanning&lt;/h3&gt;
+&lt;p&gt;词法分析器对组成源程序的字符流,并将他们组织为有意义的&lt;strong&gt;词素(lexeme)&lt;/strong&gt; 的序列
+对于每个lexeme, 词法分析器产生&lt;strong&gt;词法单元(token)&lt;/strong&gt; 作为输出:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;&amp;lt;token-name, attribute-value&amp;gt;	
+/* 个人认为是某种type + index */
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;token-name是由语法分析使用的抽象符号, attribute-value是指向词法表中这个词法单元的条目, 例如&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;position = initial + rate * 60 
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;被转化为&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;&amp;lt;id, 1&amp;gt; &amp;lt;=&amp;gt; &amp;lt;id, 2&amp;gt; &amp;lt;+&amp;gt; &amp;lt;id, 3&amp;gt; &amp;lt;*&amp;gt; &amp;lt;60&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;2-syntax-analysis--parsing&#34;&gt;2. syntax analysis / parsing&lt;/h3&gt;
+&lt;p&gt;这个阶段, 语法分析器使用由词法分析器生成的token的第一个分量(token-name) 来创建树形的中间表示, 一种常用的方法是syntax tree
+&lt;strong&gt;这个阶段已经确定了各个运算符的运算顺序&lt;/strong&gt;&lt;/p&gt;
+&lt;h3 id=&#34;3-semantic-analysis&#34;&gt;3. semantic analysis&lt;/h3&gt;
+&lt;p&gt;使用syntax tree和symbol table中的信息来检查&lt;strong&gt;源程序是否和语言定义的语义一致&lt;/strong&gt;, 同时收集&lt;strong&gt;类型信息&lt;/strong&gt;, 并把这些信息放在语法树或语法表中.
+例如, 在一些语言中, 数组的下标必须是整数, 如果使用浮点数作为数组下标, 编译器在这个阶段就会报告错误.
+同时, 一些语言可能支持自动类型转换, 编译器在这个阶段应用自动转换将浮点数转换为整数.
+这种自动转换是一个显示的符号, 比如新增一个节点inttofloat明确吧整数参数转换为一个浮点数.&lt;/p&gt;
+&lt;h3 id=&#34;4-ir-generation&#34;&gt;4. ir generation&lt;/h3&gt;
+&lt;p&gt;把源程序翻译成目标代码的时候,一个编译器可能构造出一个或多个中间表示,比如语法树.
+在前几步做完以后, 很多编译器生成一个明确的低级的或类机器语言的中间表示, 一般要有以下两个特质:
+1. 易于生成
+2. 能够被轻松的翻译成目标机器上的语言
+例如三地址代码序列:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;	t1 = inttofloat(60)
+	t2 = id3 * t1
+	t3 = id2 + t2
+	id1 = t3
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;5-optimization&#34;&gt;5. optimization&lt;/h3&gt;
+&lt;p&gt;和机器无关, 优化对象是中间代码.
+比如编译器在编译的时候可以得出结论: 把60从整数转化为浮点数可以在编译期一劳永逸的完成:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;	t1 = id3 * 60.0
+	id1 = id2 + t1
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;6-object-code-generation&#34;&gt;6. object code generation&lt;/h3&gt;
+&lt;p&gt;为中间程序合理分配寄存器和内存地址, 完成从中间代码到目标代码的翻译&lt;/p&gt;
+</description>
+                
+                
+                
+                
+                
+                    
+                        
+                    
+                        
+                    
+                
+            </item>
         
             <item>
                 <title>Cxx2.0</title>
