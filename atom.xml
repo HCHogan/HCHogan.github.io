@@ -4,7 +4,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
     <title type="text">Hank&#39;s blog</title>
     <subtitle type="html">MemE is a powerful and highly customizable GoHugo theme for personal blogs.</subtitle>
-    <updated>2023-03-27T17:05:14&#43;08:00</updated>
+    <updated>2023-03-27T17:07:53&#43;08:00</updated>
     <id>https://HCHogan.github.io/</id>
     <link rel="alternate" type="text/html" href="https://HCHogan.github.io/" />
     <link rel="self" type="application/atom&#43;xml" href="https://HCHogan.github.io/atom.xml" />
@@ -16,4 +16,59 @@
             </author>
     <rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights>
     <generator uri="https://gohugo.io/" version="0.111.3">Hugo</generator>
+        <entry>
+            <title type="text">NMSL</title>
+            <link rel="alternate" type="text/html" href="https://HCHogan.github.io/posts/test1/" />
+            <id>https://HCHogan.github.io/posts/test1/</id>
+            <updated>2023-03-27T16:56:06&#43;08:00</updated>
+            <published>2023-03-27T16:55:38&#43;08:00</published>
+            <author>
+                    <name>Hank C. Hogan</name>
+                    <uri>https://HCHogan.github.io</uri>
+                    <email>hankchogan@gmail.com</email>
+                    </author>
+            <rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html"></summary>
+            
+                <content type="html"></content>
+            
+            
+            
+            
+            
+                
+                    
+                
+                    
+                
+            
+        </entry>
+    
+        <entry>
+            <title type="text">Hello World</title>
+            <link rel="alternate" type="text/html" href="https://HCHogan.github.io/posts/hello-world/" />
+            <id>https://HCHogan.github.io/posts/hello-world/</id>
+            <updated>2023-03-27T16:40:04&#43;08:00</updated>
+            <published>2023-03-27T16:33:37&#43;08:00</published>
+            <author>
+                    <name>Hank C. Hogan</name>
+                    <uri>https://HCHogan.github.io</uri>
+                    <email>hankchogan@gmail.com</email>
+                    </author>
+            <rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">nmsl </summary>
+            
+                <content type="html">&lt;h2 id=&#34;nmsl&#34;&gt;nmsl&lt;/h2&gt;
+</content>
+            
+            
+            
+            
+            
+                
+                    
+                
+                    
+                
+            
+        </entry>
+    
 </feed>

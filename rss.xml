@@ -23,10 +23,59 @@
         
             <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright>
         
-        <lastBuildDate>Mon, 27 Mar 2023 17:05:14 &#43;0800</lastBuildDate>
+        <lastBuildDate>Mon, 27 Mar 2023 17:07:53 &#43;0800</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://HCHogan.github.io/rss.xml" />
         
+        
+            <item>
+                <title>NMSL</title>
+                <link>https://HCHogan.github.io/posts/test1/</link>
+                <guid isPermaLink="true">https://HCHogan.github.io/posts/test1/</guid>
+                <pubDate>Mon, 27 Mar 2023 16:55:38 &#43;0800</pubDate>
+                
+                    <author>hankchogan@gmail.com (Hank C. Hogan)</author>
+                
+                <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright>
+                
+                    <description></description>
+                
+                
+                
+                
+                
+                    
+                        
+                    
+                        
+                    
+                
+            </item>
+        
+            <item>
+                <title>Hello World</title>
+                <link>https://HCHogan.github.io/posts/hello-world/</link>
+                <guid isPermaLink="true">https://HCHogan.github.io/posts/hello-world/</guid>
+                <pubDate>Mon, 27 Mar 2023 16:33:37 &#43;0800</pubDate>
+                
+                    <author>hankchogan@gmail.com (Hank C. Hogan)</author>
+                
+                <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright>
+                
+                    <description>&lt;h2 id=&#34;nmsl&#34;&gt;nmsl&lt;/h2&gt;
+</description>
+                
+                
+                
+                
+                
+                    
+                        
+                    
+                        
+                    
+                
+            </item>
         
     </channel>
 </rss>
