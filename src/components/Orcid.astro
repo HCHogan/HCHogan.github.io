@@ -1,0 +1,62 @@
+---
+// src/components/Orcid.astro
+export interface Props {
+  orcidId: string;
+}
+
+const { orcidId } = Astro.props;
+const orcidUrl = `https://orcid.org/${orcidId}`;
+const iconPath = "/ORCID.svg"; // 确保这个路径是正确的哦！
+---
+
+<div class="orcid-display-card">
+  <p class="orcid-title">ORCID iD:</p>
+  <a href={orcidUrl} target="_blank" rel="noopener noreferrer" class="orcid-link-line">
+    <img 
+      src={iconPath} 
+      alt="ORCID logo" 
+      class="orcid-logo-icon"
+    />
+    <span class="orcid-identifier">{orcidId}</span>
+  </a>
+</div>
+
+<style>
+  .orcid-display-card {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; /* 和图片中字体风格类似的字体 */
+    margin-bottom: 1rem; /* 组件下方的间距 */
+    padding: 0.5rem 0; /* 给组件一点内边距，让它呼吸一下 (o^▽^o) */
+  }
+
+  .orcid-title {
+    font-size: 1.2rem; /* "ORCID iD:" 文字的大小 */
+    font-weight: bold;
+    color: #212529; /* 深色文字，接近黑色 */
+    margin-top: 0;
+    margin-bottom: 0.4rem; /* 标题和下方链接之间的距离 */
+  }
+
+  .orcid-link-line {
+    display: inline-flex; /* 让图标和ID在同一行，并且垂直居中对齐 */
+    align-items: center;
+    text-decoration: none; /* 去掉链接本身的下划线，我们给数字单独加 */
+    gap: 0.4em; /* 图标和ID文字之间的间隙 */
+  }
+  
+  .orcid-logo-icon {
+    width: 22px; /* 图标大小，和图片里差不多 */
+    height: 22px; 
+  }
+
+  .orcid-identifier {
+    font-size: 1rem; /* ORCID号码的文字大小 */
+    color: #006fbf; /* 图片中ORCID号码的蓝色 (＾▽＾) */
+    text-decoration: underline;
+    text-decoration-color: #adb5bd; /* 图片中下划线的浅灰色 */
+    text-underline-offset: 0.2em; /* 下划线和文字之间的距离，让它更美观 */
+  }
+
+  .orcid-link-line:hover .orcid-identifier {
+    text-decoration-color: #005999; /* 鼠标悬停时下划线颜色可以加深一点点 */
+  }
+</style>

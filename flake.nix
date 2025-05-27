@@ -29,7 +29,7 @@
           buildInputs = with pkgs; [
             pnpm
             yarn
-            nodejs_20
+            nodejs_22
           ];
           shellHook = ''
             export SHELL=$(which zsh)

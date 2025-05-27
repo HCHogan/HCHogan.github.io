@@ -2,7 +2,10 @@
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import Orcid from '../components/Orcid.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+
+const orcidId = "0009-0003-7270-3426";
 ---
 
 <!doctype html>
@@ -23,6 +26,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
         <li>🎾 When I’m not coding, I’m on the tennis court.</li>
         <li>🎶 I unwind with Melodic Dubstep and Tropical House on repeat.</li>
       </ul>
+     <Orcid orcidId={orcidId} />
     </main>
     <Footer />
   </body>
