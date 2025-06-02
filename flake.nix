@@ -31,10 +31,6 @@
             yarn
             nodejs_22
           ];
-          shellHook = ''
-            export SHELL=$(which zsh)
-            exec zsh
-          '';
         };
       }
     );
