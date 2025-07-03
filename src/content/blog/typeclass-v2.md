@@ -72,50 +72,30 @@ In the sections that follow we’ll dissect the desugaring step in detail and de
 ![definition of system F-omega 2](/typeclassv2-2.png)
 
 ## The Three Step Recipe
-> Class ⇒ Dict Type · Instance ⇒ Dict Value · Constraint ⇒ Extra Param
-1. Class declarations generate a record-typed type constructor.
-2. Instances generate a value for the corresponding type and class.
-3. The right dictionary was resolved and inserted in the call side.
 
-## Step-By-Step Translation
-### Class without super class (Eq)
-Every class was turned into a type constructor`CDictClass :: * -> *`
+| Step |   What it does                                                                                                              |
+| ---- | --------------------------------------------------------------------------------------------------------------------------- |
+| 1    | **Class ⇨ dictionary type-constructor**<br>Each class declaration yields a record-typed type constructor `C Dict :: … → *`. |
+| 2    | **Instance ⇨ dictionary value**<br>An `instance` fills that record for a concrete type.                                     |
+| 3    | **Constraint ⇨ extra parameter**<br>The compiler passes the right dictionary at every call-site.                            |
+
+
+## Step-by-step translation
+
+### 1 · Class without superclass  (`Eq`)
+
+| Haskell source                                               | After desugaring                                                                                                                                                        |
+| ------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `class Eq a where (==) :: a -> a -> Bool`      | `EqDict :: * → * = λA:*. { eq : A → A → Bool } (==) = ΛA. λd : EqDict A.  d.eq` |
+| `instance Eq Int where  x == y = primIntEq x y` | `eqIntDict : EqDict InteqIntDict =  { eq = λx:Int. λy:Int. primIntEq x y }`                                                                               |
+| `f :: Eq a => a -> Boolf x = … g = f 3`     | `-- constraint becomes first parameter f :: ∀A:* .  EqDict A → A → Bool-- call-site gets a dictionary g = f [Int] eqIntDict  3`                      |
+
+---
+
+### 2 · Class with superclass  (`Ord` inherits `Eq`)
 ```haskell
 -- original class decl
-class Eq a where 
-  (==) :: a -> a -> Bool
-
--- generated tycon
-type EqDict :: * → * = λA.*. { eq : A → A → Bool }
-
--- generated method selector
-(==) :: ΛA:*. λd:Eq A. d.eq             -- top-level
-(==) [Int] eqIntDict  x y               -- use site
-
--- original instance
-instance Eq Int where
-  x == y = primIntEq x y
-
--- generated dict value
-eqIntDict : EqDict Int
-eqIntDict = { eq = λx:Int. λy:Int. primIntEq x y }
-
--- function that uses the constraint
-f :: Eq a => a -> Bool
-f x = ...
-
-g = f 3
-
--- was desugared into
-f :: ∀A:*. Eq A → A → Bool
-
-g = f [Int] eqIntDict  3
-```
-
-### Class with super class (Ord)
-```haskell
--- original class decl
-class (Eq a) => Ord a where 
+class (Eq a) => Ord a where
   compare :: a -> a -> Ordering
 
 -- generated tycon
@@ -148,62 +128,94 @@ ordListDict = ΛA. λdA. { eqDict  = eqListDict dA.eqDict
                        }
 ```
 
-### Class with hkt (Functor)
-Same steps also applies:
+---
+
+### 3 · High-kind class  (`Functor`, `Applicative`)
+
+#### 3.1 `Functor`
+
 ```haskell
 class Functor f where
   fmap :: (a -> b) -> f a -> f b
+```
 
--- type argument f :: * -> *, indicate that f is a tycon
--- fmap needs to quantify over A and B, so we use a forall here
-type FunctorDict :: (* → *) → * = λF:*→*. { fmap :: ∀A:*. ∀B:*. (A → B) → F A → F B }
+```fomega
+FunctorDict :: (* → *) → *
+FunctorDict = λF:*→*.
+  { fmap : ∀A:* . ∀B:* . (A → B) → F A → F B }
+```
 
+```haskell
 instance Functor Maybe where
   fmap _ Nothing  = Nothing
   fmap f (Just x) = Just (f x)
-
-maybeFunctor :: FunctorDict Maybe
-maybeFunctor =
-  { fmap = ΛA. ΛB. λf:A→B. λm:Maybe A. case m of 
-      Nothing -> Nothing
-      Just x  -> Just (f x)
-  }
-
-class Functor f => Applicative f where
-  pure  :: a -> f a
-  (<*>) :: f (a->b) -> f a -> f b
-
-type ApplicativeDict :: (*→*) → * = λF:*→*.
-  { functor  :: FunctorDict F        -- parent dict instance
-  ; pure     :: ∀A. A → F A
-  ; ap       :: ∀A B. F (A→B) → F A → F B }
-
-maybeApplicative :: ApplicativeDict Maybe
-maybeApplicative =
-  { functor = maybeFunctor                       -- superclass
-  ; pure    = ΛA. λx:A. Just x
-  ; ap      = ΛA B. λmf:Maybe (A→B). λma:Maybe A.
-               case mf of
-                 Nothing   -> Nothing
-                 Just f    -> maybeFunctor.fmap [A] [B] f ma }
-
-liftA2 :: Applicative f => (a->b->c) -> f a -> f b -> f c
-liftA2 g fa fb = pure g <*> fa <*> fb
-
-u = liftA2 (+) (Just 1) (Just 2)
-
--- desugared u and liftA2
-liftA2 :: ∀(f:*→*). ApplicativeDict f ->           -- new dict passing
-         ∀a b c. (a->b->c) -> f a -> f b -> f c
-liftA2 = ΛF. λdApp:ApplicativeDict F.
-           ΛA B C. λg fa fb.
-             let p   = dApp.pure   [ (A→B→C) ] g
-                 ap' = dApp.ap     [A] [B→C]
-                 ap''= dApp.ap     [B] [C]
-             in  ap'' (ap' p fa) fb
-
-u = liftA2 [Maybe] maybeApplicative [Int] [Int] [Int] plus (Just 1) (Just 2)
 ```
 
+```fomega
+maybeFunctor : FunctorDict Maybe
+maybeFunctor =
+  { fmap = ΛA. ΛB. λf:A→B. λm:Maybe A.
+               case m of
+                 Nothing -> Nothing
+                 Just x  -> Just (f x) }
+```
+
+#### 3.2 `Applicative` (has superclass `Functor`)
+
+```haskell
+class Functor f => Applicative f where
+  pure  :: a -> f a
+  (<*>) :: f (a -> b) -> f a -> f b
+```
+
+```fomega
+ApplicativeDict :: (* → *) → *
+ApplicativeDict = λF:*→*.
+  { functor : FunctorDict F
+  ; pure    : ∀A. A → F A
+  ; ap      : ∀A B. F (A→B) → F A → F B }
+```
+
+```haskell
+instance Applicative Maybe where …
+```
+
+```fomega
+maybeAp : ApplicativeDict Maybe
+maybeAp =
+  { functor = maybeFunctor
+  ; pure    = ΛA. λx:A. Just x
+  ; ap      = ΛA B. λmf:Maybe (A→B). λma:Maybe A.
+                case mf of
+                  Nothing -> Nothing
+                  Just f  -> maybeFunctor.fmap [A] [B] f ma }
+```
+
+#### 3.3 Dictionary-passing at call-sites
+
+```haskell
+liftA2 :: Applicative f => (a -> b -> c) -> f a -> f b -> f c
+```
+
+desugars to
+
+```fomega
+liftA2 :: ∀F:*→* .
+          ApplicativeDict F ->
+          ∀A B C. (A→B→C) -> F A -> F B -> F C
+```
+
+Compiler supplies `maybeAp` when `f ~ Maybe`:
+
+```fomega
+liftA2 [Maybe] maybeAp [Int] [Int] [Int] plus (Just 1) (Just 2)
+```
+
+---
+
 ## Wrap up
-In GHC, these generated type constructor for class have a special kind: `Constraint`
+Every class becomes a dictionary type constructor;
+every instance becomes one value of that type;
+every constraint becomes a hidden parameter.
+
+In GHC these dictionary types all live at kind Constraint, the dedicated kind for “things that turn into dictionaries during elaboration.”
