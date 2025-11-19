@@ -1,0 +1,29 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import App from '../components/App.jsx';
+import { getCollection } from 'astro:content';
+
+const blogEntries = await getCollection('blog');
+const posts = blogEntries
+  .map((entry) => ({
+    id: entry.slug,
+    slug: entry.slug,
+    ...entry.data,
+    content: entry.body
+  }))
+  .sort((a, b) => new Date(b.date) - new Date(a.date));
+
+const fieldNoteEntries = await getCollection('fieldNotes');
+const fieldNotes = fieldNoteEntries
+  .map((entry) => ({
+    id: entry.slug,
+    slug: entry.slug,
+    ...entry.data,
+    content: entry.body
+  }))
+  .sort((a, b) => new Date(b.date) - new Date(a.date));
+---
+
+<BaseLayout>
+  <App client:load posts={posts} fieldNotes={fieldNotes} />
+</BaseLayout>
