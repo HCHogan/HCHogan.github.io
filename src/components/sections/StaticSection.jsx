@@ -6,7 +6,10 @@ const StaticSection = ({ data, palette, isDark }) => {
   return (
     <section className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
       <div className={`border rounded-2xl p-8 backdrop-blur ${palette.borderBase} ${palette.cardBg} ${palette.cardShadow}`}>
-        <p className={`text-xs font-mono uppercase tracking-[0.3em] mb-4 ${palette.textMuted}`}>{data.tagline}</p>
+        <div className="relative mb-6">
+          <p className={`text-xs font-mono uppercase tracking-[0.3em] mb-2 ${palette.textMuted}`}>{data.tagline}</p>
+          <div className="h-1 w-24 bg-gradient-to-r from-orange-500/60 to-transparent rounded-full" />
+        </div>
         <h1 className={`text-3xl md:text-4xl font-bold tracking-tight mb-4 ${palette.textPrimary}`}>{data.title}</h1>
         <p className={`text-base md:text-lg leading-relaxed ${palette.textSecondary}`}>{data.description}</p>
         {data.bullets && (
