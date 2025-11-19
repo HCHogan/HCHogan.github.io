@@ -29,11 +29,6 @@ const PostDetail = ({ post, previousPost, nextPost, onBack, onNavigate, palette,
     ul: (props) => <ul {...props} className="list-disc pl-6 space-y-2 mb-4" />,
     ol: (props) => <ol {...props} className="list-decimal pl-6 space-y-2 mb-4" />,
     code: ({ inline, className, children }) => {
-      if (inline) {
-        return (
-          <code className={className}>{children}</code>
-        );
-      }
       const match = /language-(\w+)/.exec(className || '');
       const lang = match ? match[1] : defaultCodeLang;
       return (
