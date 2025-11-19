@@ -14,6 +14,11 @@ body {
   min-height: 100vh;
 }
 
+pre {
+  margin: 0;
+  font-family: inherit;
+}
+
 ::selection {
   background-color: #f97316;
   color: #fff;

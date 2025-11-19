@@ -1,4 +1,6 @@
 import React from 'react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import Icon from '../icons/Icon.jsx';
 import CodeBlock from '../CodeBlock.jsx';
 
@@ -10,87 +12,37 @@ const PostDetail = ({ post, previousPost, nextPost, onBack, onNavigate, palette,
     onNavigate(target.slug || target.id);
   };
 
-  let listBuffer = [];
-  let codeLang = null;
-  let codeBuffer = [];
+  const defaultCodeLang = typeof post.category === 'string' ? post.category.toLowerCase() : 'text';
 
-  const nodes = [];
-
-  const flushList = (key) => {
-    if (!listBuffer.length) return;
-    nodes.push(
-      <ul key={`list-${key}`} className="list-disc pl-6 mb-4">
-        {listBuffer.map((item, idx) => (
-          <li key={`list-item-${key}-${idx}`} className="leading-loose">
-            {item}
-          </li>
-        ))}
-      </ul>
-    );
-    listBuffer = [];
-  };
-
-  const flushCode = (key) => {
-    if (!codeBuffer.length) return;
-    nodes.push(
-      <CodeBlock key={`code-${key}`} lang={codeLang || post.category.toLowerCase()} isDark={isDark}>
-        {codeBuffer.join('\n')}
-      </CodeBlock>
-    );
-    codeBuffer = [];
-    codeLang = null;
-  };
-
-  post.content.split('\n').forEach((line, idx) => {
-    const trimmed = line.trim();
-
-    if (trimmed.startsWith('```')) {
-      if (codeLang === null) {
-        codeLang = trimmed.replace('```', '').trim();
-        flushList(idx);
-      } else {
-        flushCode(idx);
+  const markdownComponents = {
+    pre: ({ children }) => <>{children}</>,
+    h1: (props) => (
+      <h1 {...props} className={`text-3xl font-bold mt-12 mb-6 ${palette.textPrimary}`} />
+    ),
+    h2: (props) => (
+      <h2 {...props} className={`text-2xl font-bold mt-10 mb-4 ${palette.textPrimary}`} />
+    ),
+    h3: (props) => (
+      <h3 {...props} className={`text-xl font-bold mt-8 mb-3 ${palette.textPrimary}`} />
+    ),
+    p: (props) => <p {...props} className="mb-4 leading-relaxed" />,
+    ul: (props) => <ul {...props} className="list-disc pl-6 space-y-2 mb-4" />,
+    ol: (props) => <ol {...props} className="list-decimal pl-6 space-y-2 mb-4" />,
+    code: ({ inline, className, children }) => {
+      if (inline) {
+        return (
+          <code className={className}>{children}</code>
+        );
       }
-      return;
-    }
-
-    if (codeLang !== null) {
-      codeBuffer.push(line);
-      return;
-    }
-
-    if (!trimmed.length) {
-      flushList(idx);
-      nodes.push(<br key={`break-${idx}`} />);
-      return;
-    }
-
-    if (trimmed.startsWith('* ')) {
-      listBuffer.push(trimmed.substring(2));
-      return;
-    }
-
-    flushList(idx);
-
-    if (trimmed.startsWith('###')) {
-      nodes.push(
-        <div key={`heading-${idx}`} className="flex items-center mt-12 mb-6">
-          <span className="bg-orange-500 text-white text-xs font-bold px-2 py-1 rounded mr-3 font-mono">0{idx}</span>
-          <h3 className={`text-2xl font-bold m-0 ${palette.textPrimary}`}>{trimmed.replace('###', '')}</h3>
-        </div>
+      const match = /language-(\w+)/.exec(className || '');
+      const lang = match ? match[1] : defaultCodeLang;
+      return (
+        <CodeBlock lang={lang} isDark={isDark}>
+          {String(children).trim()}
+        </CodeBlock>
       );
-      return;
     }
-
-    nodes.push(
-      <p key={`paragraph-${idx}`} className="mb-4">
-        {line}
-      </p>
-    );
-  });
-
-  flushList('end');
-  flushCode('end');
+  };
 
   return (
     <article className="animate-in fade-in zoom-in-95 duration-500">
@@ -138,7 +90,12 @@ const PostDetail = ({ post, previousPost, nextPost, onBack, onNavigate, palette,
             : 'prose-slate prose-p:text-slate-600 prose-headings:text-slate-900'
         } prose-a:text-orange-500 hover:prose-a:text-orange-600 prose-img:rounded-xl`}
       >
-        {nodes}
+        <ReactMarkdown
+          remarkPlugins={[remarkGfm]}
+          components={markdownComponents}
+        >
+          {post.content}
+        </ReactMarkdown>
       </div>
 
       {(previousPost || nextPost) && (
