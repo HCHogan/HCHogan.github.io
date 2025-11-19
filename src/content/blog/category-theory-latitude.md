@@ -1,31 +1,41 @@
 ---
-title: "范畴论：抽象的经纬度"
+title: "My Haskell Reading List"
 subtitle: "Category Theory as the Map of Maps"
-date: "2023-11-02"
+date: "2025-07-02"
 category: "Haskell"
 tags:
-  - Category Theory
-  - Monads
   - Haskell
 readTime: "8 min"
-preview: "Haskell 的类型系统就像是一套精密的导航设备。Monad 不仅仅是自函子上的幺半群，它是计算语境下的‘功能性外套’..."
+preview: "Enlighting haskell materials"
 ---
+Some useful haskell contents I came across.
 
-### The IO Monad
+## Blog Posts
 
-Haskell 处理副作用的方式，让我想起了 Gore-Tex 面料：**它允许透气（数据流动），但防止雨水（副作用）浸湿你的核心逻辑。**
+[A monad is a monoid in the category of endofunctors, what's the problem?](https://www.reddit.com/r/math/comments/ap25mr/a_monad_is_a_monoid_in_the_category_of)
+[Introduction to Free Monads](https://serokell.io/blog/introduction-to-free-monads)
 
-```haskell
--- 纯粹与不纯粹的边界
-main :: IO ()
-main = do
-  putStrLn "Checking topological invariants..."
-  let torus = computeEulerCharacteristic 1
-  print torus
-```
+[lens over tea](https://web.archive.org/web/20210521023726/https://artyom.me/lens-over-tea-1)
 
-在这个系统中，每一个函数都是一个模块化的扣件。你可以随意组合它们，只要接口（类型）匹配。
+[category theory for programmers](https://bartoszmilewski.com/2014/10/28/category-theory-for-programmers-the-preface/)
 
-### 自然变换 (Natural Transformation)
+[callcc implementation](https://stackoverflow.com/questions/9050725/call-cc-implementation)
 
-如果我们把函子看作是两个范畴之间的映射，那么自然变换就是这些映射之间的形变。
+[glassery](https://oleg.fi/gists/posts/2017-04-18-glassery.html)
+
+[haskell traversable](https://en.wikibooks.org/wiki/Haskell/Traversable)
+
+## Lecture Videos
+
+[delimited continuations](https://www.youtube.com/watch?v=TE48LsgVlIU)
+
+[adventure with types in haskell](https://www.youtube.com/watch?v=2IZQx7WNOMs&t=3657s)
+
+[Secrets of the GHC Typechecker in 100 Type Declarations - Simon Peyton Jones](https://www.youtube.com/watch?v=kyI9fjtgN7w&t=3682s)
+
+[Into the Core Squeezing Haskell into nine Constructors - Simon Peyton Jones](https://www.youtube.com/watch?v=Gml1m-3L47s&t=4528s)
+
+[Simon Peyton Jones - Revisiting pattern match overlap checks in Haskell](https://www.youtube.com/watch?v=SWO5OzSxD6Y)
+
+[implementing mltt](https://www.bilibili.com/video/BV16j411o7R5/?spm_id_from=333.337.search-card.all.click)
+
